@@ -7,19 +7,19 @@
 #include "syscall.h"
 #include "defs.h"
 
-// Fetch the uint64 at addr from the current process.
+// Fetch the uint64 at addr from the current process.  当前进程取地址
 int
 fetchaddr(uint64 addr, uint64 *ip)
 {
-  struct proc *p = myproc();
-  if(addr >= p->sz || addr+sizeof(uint64) > p->sz)
+  struct proc *p = myproc();  // 返回当前进程的结构体
+  if(addr >= p->sz || addr+sizeof(uint64) > p->sz) // 地址大于进程内存大小
     return -1;
   if(copyin(p->pagetable, (char *)ip, addr, sizeof(*ip)) != 0)
     return -1;
   return 0;
 }
 
-// Fetch the nul-terminated string at addr from the current process.
+// Fetch the nul-terminated string at addr from the current process. 获取addr处的字符长度
 // Returns length of string, not including nul, or -1 for error.
 int
 fetchstr(uint64 addr, char *buf, int max)
@@ -53,7 +53,7 @@ argraw(int n)
   return -1;
 }
 
-// Fetch the nth 32-bit system call argument.
+// Fetch the nth 32-bit system call argument. 获取系统调用参数
 int
 argint(int n, int *ip)
 {

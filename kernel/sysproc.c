@@ -37,7 +37,7 @@ sys_wait(void)
     return -1;
   return wait(p);
 }
-
+// 返回当前进程内存大小
 uint64
 sys_sbrk(void)
 {
@@ -51,7 +51,7 @@ sys_sbrk(void)
     return -1;
   return addr;
 }
-
+// 睡眠
 uint64
 sys_sleep(void)
 {

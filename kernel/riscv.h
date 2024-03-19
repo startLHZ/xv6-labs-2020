@@ -271,7 +271,7 @@ intr_off()
   w_sstatus(r_sstatus() & ~SSTATUS_SIE);
 }
 
-// are device interrupts enabled?
+// are device interrupts enabled? 
 static inline int
 intr_get()
 {

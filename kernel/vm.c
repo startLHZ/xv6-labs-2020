@@ -374,7 +374,7 @@ copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
 }
 
 // Copy from user to kernel.
-// Copy len bytes to dst from virtual address srcva in a given page table.
+// Copy len bytes to dst from virtual address srcva in a given page table. 从给定页表中的虚拟地址srcva拷贝len字节到dst。
 // Return 0 on success, -1 on error.
 int
 copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
@@ -440,3 +440,12 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return -1;
   }
 }
+
+// void vmprint(pagetable_t myPagetable) {
+//   printf("page table");
+//   int va = 0;
+//   printf(" %x", myPagetable);
+  
+//   walk(myPagetable, va, 0);
+//   return;
+// }

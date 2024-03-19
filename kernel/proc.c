@@ -13,7 +13,7 @@ struct proc proc[NPROC];
 struct proc *initproc;
 
 int nextpid = 1;
-struct spinlock pid_lock;
+struct spinlock pid_lock; // 自旋锁
 
 extern void forkret(void);
 static void wakeup1(struct proc *chan);
@@ -21,7 +21,7 @@ static void freeproc(struct proc *p);
 
 extern char trampoline[]; // trampoline.S
 
-// initialize the proc table at boot time.
+// initialize the proc table at boot time. boot时初始化进程表
 void
 procinit(void)
 {
@@ -44,9 +44,9 @@ procinit(void)
   kvminithart();
 }
 
-// Must be called with interrupts disabled,
+// Must be called with interrupts disabled, 禁用中断下调用
 // to prevent race with process being moved
-// to a different CPU.
+// to a different CPU. 返回cpu的id
 int
 cpuid()
 {

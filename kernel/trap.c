@@ -84,8 +84,8 @@ usertrap(void)
 }
 
 //
-// return to user space
-//
+// return to user space 
+// 回到用户空间
 void
 usertrapret(void)
 {

@@ -95,7 +95,7 @@ push_off(void)
     mycpu()->intena = old;
   mycpu()->noff += 1;
 }
-
+//  noff£º pushoffµÄÇ¶Ì×Éî¶È
 void
 pop_off(void)
 {

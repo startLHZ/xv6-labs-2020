@@ -1,4 +1,4 @@
-// Saved registers for kernel context switches.
+// Saved registers for kernel context switches. 为内核切换保存寄存器。
 struct context {
   uint64 ra;
   uint64 sp;
@@ -43,8 +43,8 @@ extern struct cpu cpus[NCPU];
 // the entire kernel call stack.
 struct trapframe {
   /*   0 */ uint64 kernel_satp;   // kernel page table
-  /*   8 */ uint64 kernel_sp;     // top of process's kernel stack
-  /*  16 */ uint64 kernel_trap;   // usertrap()
+  /*   8 */ uint64 kernel_sp;     // top of process's kernel stack  进程内核栈顶端
+  /*  16 */ uint64 kernel_trap;   // usertrap() 
   /*  24 */ uint64 epc;           // saved user program counter
   /*  32 */ uint64 kernel_hartid; // saved kernel tp
   /*  40 */ uint64 ra;
@@ -80,24 +80,24 @@ struct trapframe {
   /* 280 */ uint64 t6;
 };
 
-enum procstate { UNUSED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
+enum procstate { UNUSED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE }; // 进程5状态
 
-// Per-process state
+// Per-process state 每一个进程的状态
 struct proc {
   struct spinlock lock;
 
   // p->lock must be held when using these:
-  enum procstate state;        // Process state
-  struct proc *parent;         // Parent process
-  void *chan;                  // If non-zero, sleeping on chan
-  int killed;                  // If non-zero, have been killed
-  int xstate;                  // Exit status to be returned to parent's wait
-  int pid;                     // Process ID
+  enum procstate state;        // Process state 状态
+  struct proc *parent;         // Parent process 父进程
+  void *chan;                  // If non-zero, sleeping on chan 睡眠
+  int killed;                  // If non-zero, have been killed 被杀
+  int xstate;                  // Exit status to be returned to parent's wait 返回到父进程的wait（）
+  int pid;                     // Process ID 进程号
 
   // these are private to the process, so p->lock need not be held.
-  uint64 kstack;               // Virtual address of kernel stack
-  uint64 sz;                   // Size of process memory (bytes)
-  pagetable_t pagetable;       // User page table
+  uint64 kstack;               // Virtual address of kernel stack 内存栈的虚拟地址
+  uint64 sz;                   // Size of process memory (bytes) 进程内存大小
+  pagetable_t pagetable;       // User page table                 用户页表
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
   struct file *ofile[NOFILE];  // Open files
