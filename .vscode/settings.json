@@ -1,3 +1,11 @@
 {
-    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "files.associations": {
+        "*.c": "c",
+        "param.h": "c",
+        "user.h": "c",
+        "types.h": "c",
+        "memlayout.h": "c",
+        "defs.h": "c"
+    }
 }

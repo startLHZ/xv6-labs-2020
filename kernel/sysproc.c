@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
 
 uint64
 sys_exit(void)
@@ -94,4 +95,28 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+uint64
+sys_trace(void) {
+  int traceSysMask;
+  if (argint(0, &traceSysMask) < 0)
+    return -1;
+  myproc()->trackmask |= traceSysMask;
+  return 0;
+}
+uint64
+sys_sysinfo(void) {
+  struct proc *myProc = myproc();
+  uint64 p;
+  if (argaddr(0, &p) < 0) {
+    return -1;
+  }
+  // 不能是指针，拷贝的是指针的值
+  struct sysinfo myInfo;
+  myInfo.freemem = kfreemem();
+  myInfo.nproc = countFreeProc();
+
+  if (copyout(myProc->pagetable, p, (char*)&myInfo, sizeof(myInfo)) < 0)
+    return -1;
+  return 0;
 }

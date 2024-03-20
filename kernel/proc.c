@@ -126,7 +126,7 @@ found:
   memset(&p->context, 0, sizeof(p->context));
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
-
+  p->trackmask = 0; // ************************************* 新进程默认不追踪
   return p;
 }
 
@@ -296,7 +296,7 @@ fork(void)
   np->state = RUNNABLE;
 
   release(&np->lock);
-
+  np->trackmask = p->trackmask; // fork出的新进程继承父进程的trackmask*****************************
   return pid;
 }
 
@@ -692,4 +692,14 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+uint64
+countFreeProc(void) {
+  struct proc *p;
+  uint64 res = 0;
+  for (p = proc; p < &proc[NPROC]; p ++) {
+    if (p->state != UNUSED) res ++;
+  }
+  return res;
 }
